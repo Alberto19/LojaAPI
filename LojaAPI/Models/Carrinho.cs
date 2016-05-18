@@ -49,5 +49,16 @@ namespace Loja.Models
 
             produtoCarregado.Quantidade = produto.Quantidade;
         }
+
+        public string ToXml()
+        {
+            XmlSerializer xmlSelrializer = new XmlSerializer(typeof(Carrinho));
+            StringWriter stringWritter = new StringWriter();
+            using (XmlWriter writer = XmlWriter.Create(stringWritter))
+            {
+                xmlSelrializer.Serialize(writer, this);
+                return stringWritter.ToString();
+            }
+        }
     }
 }
