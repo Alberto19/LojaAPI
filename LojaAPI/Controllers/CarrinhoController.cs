@@ -43,7 +43,7 @@ namespace LojaAPI.Controllers
         }
 
         [Route("api/carrinho/{idCarrinho}/produto/{idProduto}")]
-        public HttpResponseMessage Delete([FromUri] int idCarrinho, int idProduto)
+        public HttpResponseMessage Delete([FromUri] int idCarrinho, [FromUri]int idProduto)
         {
 
             var dao = new CarrinhoDAO();
@@ -52,6 +52,18 @@ namespace LojaAPI.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
+
+        [Route("api/carrinho/{idCarrinho}/produto/{idProduto}/quantidade")]
+        public HttpResponseMessage Put([FromBody]Produto produto, [FromUri] int idCarrinho, [FromUri]int idProduto)
+        {
+
+            var dao = new CarrinhoDAO();
+            var carrinho = dao.Busca(idCarrinho);
+            carrinho.TrocaQuantidade(produto);
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+
 
 
     }
