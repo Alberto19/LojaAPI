@@ -15,8 +15,8 @@ namespace LojaAPI.Controllers
         {
             try
             {
-                CarrinhoDAO dao = new CarrinhoDAO();
-                Carrinho carrinho = dao.Busca(id);
+                var dao = new CarrinhoDAO();
+                var carrinho = dao.Busca(id);
                 return  Request.CreateResponse(HttpStatusCode.OK, carrinho);
             }
             catch(KeyNotFoundException)
@@ -32,7 +32,7 @@ namespace LojaAPI.Controllers
 
         public HttpResponseMessage Post([FromBody] Carrinho carrinho)
         {
-            CarrinhoDAO dao = new CarrinhoDAO();
+            var dao = new CarrinhoDAO();
             dao.Adiciona(carrinho);
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
@@ -41,6 +41,18 @@ namespace LojaAPI.Controllers
 
             return response;
         }
+
+        [Route("api/carrinho/{idCarrinho}/produto/{idProduto}")]
+        public HttpResponseMessage Delete([FromUri] int idCarrinho, int idProduto)
+        {
+
+            var dao = new CarrinhoDAO();
+            var carrinho = dao.Busca(idCarrinho);
+            carrinho.Remove(idProduto);
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+
 
     }
 }
